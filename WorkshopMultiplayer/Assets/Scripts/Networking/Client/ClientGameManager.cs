@@ -1,12 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClientGameManager : MonoBehaviour
 {
-    public async Task InitAsync()
+    private const string MenuSceneName = "Menu";
+    public async Task<bool> InitAsync()
     {
-        //Autheticate Player
+        await UnityServices.InitializeAsync();
+
+        AuthState authState = await AuthenticationWrapper.DoAuth();
+
+        if (authState == AuthState.Authenticated)
+        {
+            return true;
+        }
+
+        return false;
     }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene(MenuSceneName);
+    }
+   
+
+    
 }
+

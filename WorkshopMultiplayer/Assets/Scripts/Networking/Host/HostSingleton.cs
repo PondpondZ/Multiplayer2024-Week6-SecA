@@ -14,26 +14,25 @@ public class HostSingleton : MonoBehaviour
       get
       {
          if (instance == null) { return instance; }
-
          instance = FindFirstObjectByType<HostSingleton>();
+         
          if (instance == null)
          {
             Debug.LogError("No ClientSingleton in the scene ");
             return null;
          }
-
          return instance;
       }
    }
 
-   private void Start()
+   void Start()
    {
       DontDestroyOnLoad(gameObject);
    }
 
-   public async Task CreateClient()
+   public void CreateHost()
    {
       gameManager = new HostGameManager();
-      await gameManager.InitAsync();
+     
    }
 }
